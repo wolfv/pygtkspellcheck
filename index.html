@@ -1,0 +1,227 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to Python GTK Spellchecker’s documentation! &mdash; Python GTK Spellchecker 2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Python GTK Spellchecker 2.0 documentation" href="#" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="#">Python GTK Spellchecker 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-python-gtk-spellchecker-s-documentation">
+<h1>Welcome to Python GTK Spellchecker&#8217;s documentation!<a class="headerlink" href="#welcome-to-python-gtk-spellchecker-s-documentation" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gtkspellcheck.SpellChecker">
+<em class="property">class </em><tt class="descclassname">gtkspellcheck.</tt><tt class="descname">SpellChecker</tt><big>(</big><em>view</em>, <em>language='en'</em>, <em>prefix='gtkspellchecker'</em>, <em>params={}</em><big>)</big><a class="headerlink" href="#gtkspellcheck.SpellChecker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main spellchecking class, everything important happens here.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>view</strong> &#8211; GtkTextView the SpellChecker should be attached to</li>
+<li><strong>language</strong> &#8211; the language which should be used for spellchecking (use codes like en_US or de_DE)</li>
+<li><strong>prefix</strong> &#8211; a prefix for some internal GtkTextMarks</li>
+<li><strong>params</strong> &#8211; dictionary for enchant params that should be set e.g. <cite>enchant.myspell.dictionary.path</cite></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="SpellChecker.languages">
+<tt class="descname">languages</tt><a class="headerlink" href="#SpellChecker.languages" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of supported languages.</p>
+<dl class="function">
+<dt id="SpellChecker.exists">
+<tt class="descname">exists</tt><big>(</big><em>language</em><big>)</big><a class="headerlink" href="#SpellChecker.exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if a language exists</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>language</strong> &#8211; language to check</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="gtkspellcheck.SpellChecker.append_filter">
+<tt class="descname">append_filter</tt><big>(</big><em>regex</em>, <em>filter_type</em><big>)</big><a class="headerlink" href="#gtkspellcheck.SpellChecker.append_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append a new filter to the filter list.
+Filters are useful to ignore some misspelled words based on regular expressions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>regex</strong> &#8211; the regex which used for filtering</li>
+<li><strong>filter_type</strong> &#8211; the type of the filter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Filter Types:</p>
+<p><tt class="xref py py-const docutils literal"><span class="pre">SpellChecker.FILTER_WORD</span></tt>: The regex must match the whole word you want to filter.
+The word separation is done by Pangos so for example urls don&#8217;t work here because they, are separated in many words.</p>
+<p><tt class="xref py py-const docutils literal"><span class="pre">SpellChecker.FILTER_LINE</span></tt>: If the expression you want to match is a single line expression use this type.
+It should not be an open end expression because then the rest of the line with the text you want to filter become correct to.</p>
+<p><tt class="xref py py-const docutils literal"><span class="pre">SpellChecker.FILTER_TEXT</span></tt>: Use this if you want to filter multiline expressions.
+The regex will be compiled with the <cite>MULTILINE</cite> flag.
+Don&#8217;t use open end expressions here, too.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gtkspellcheck.SpellChecker.buffer_initialize">
+<tt class="descname">buffer_initialize</tt><big>(</big><big>)</big><a class="headerlink" href="#gtkspellcheck.SpellChecker.buffer_initialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the GtkTextBuffer associated with the GtkTextView.
+If you associate a new GtkTextBuffer with the GtkTextView call this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gtkspellcheck.SpellChecker.disable">
+<tt class="descname">disable</tt><big>(</big><big>)</big><a class="headerlink" href="#gtkspellcheck.SpellChecker.disable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable spellchecking.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gtkspellcheck.SpellChecker.enable">
+<tt class="descname">enable</tt><big>(</big><big>)</big><a class="headerlink" href="#gtkspellcheck.SpellChecker.enable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable spellchecking.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gtkspellcheck.SpellChecker.enabled">
+<tt class="descname">enabled</tt><a class="headerlink" href="#gtkspellcheck.SpellChecker.enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable or disable spellchecking</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gtkspellcheck.SpellChecker.language">
+<tt class="descname">language</tt><a class="headerlink" href="#gtkspellcheck.SpellChecker.language" title="Permalink to this definition">¶</a></dt>
+<dd><p>The language used for spellchecking</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gtkspellcheck.SpellChecker.recheck">
+<tt class="descname">recheck</tt><big>(</big><big>)</big><a class="headerlink" href="#gtkspellcheck.SpellChecker.recheck" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rechecks the spelling of the whole text.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gtkspellcheck.SpellChecker.remove_filter">
+<tt class="descname">remove_filter</tt><big>(</big><em>regex</em>, <em>filter_type</em><big>)</big><a class="headerlink" href="#gtkspellcheck.SpellChecker.remove_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a filter from the filter list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>regex</strong> &#8211; the regex which used for filtering</li>
+<li><strong>filter_type</strong> &#8211; the type of the filter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to Python GTK Spellchecker&#8217;s documentation!</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="#">Python GTK Spellchecker 2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Maximilian Köhl.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
