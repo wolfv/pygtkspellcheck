@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to Python GTK Spellchecker’s documentation! &mdash; Python GTK Spellchecker 2.0 documentation</title>
+    <title>Welcome to Python GTK Spellchecker’s documentation! &mdash; Python GTK Spellcheck 2.2 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '2.0',
+        VERSION:     '2.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Python GTK Spellchecker 2.0 documentation" href="#" /> 
+    <link rel="top" title="Python GTK Spellcheck 2.2 documentation" href="#" /> 
   </head>
   <body>
     <div class="related">
@@ -34,7 +34,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="#">Python GTK Spellchecker 2.0 documentation</a> &raquo;</li> 
+        <li><a href="#">Python GTK Spellcheck 2.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -57,7 +57,7 @@
 <li><strong>view</strong> &#8211; GtkTextView the SpellChecker should be attached to</li>
 <li><strong>language</strong> &#8211; the language which should be used for spellchecking (use codes like en_US or de_DE)</li>
 <li><strong>prefix</strong> &#8211; a prefix for some internal GtkTextMarks</li>
-<li><strong>params</strong> &#8211; dictionary for enchant params that should be set e.g. <cite>enchant.myspell.dictionary.path</cite></li>
+<li><strong>params</strong> &#8211; enchant broker parameters that should be set e.g. <cite>enchant.myspell.dictionary.path</cite></li>
 </ul>
 </td>
 </tr>
@@ -84,6 +84,20 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="gtkspellcheck.SpellChecker.add_to_dictionary">
+<tt class="descname">add_to_dictionary</tt><big>(</big><em>word</em><big>)</big><a class="headerlink" href="#gtkspellcheck.SpellChecker.add_to_dictionary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a word to user&#8217;s dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>word</strong> &#8211; the word to add</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="gtkspellcheck.SpellChecker.append_filter">
 <tt class="descname">append_filter</tt><big>(</big><em>regex</em>, <em>filter_type</em><big>)</big><a class="headerlink" href="#gtkspellcheck.SpellChecker.append_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Append a new filter to the filter list.
@@ -102,12 +116,27 @@ Filters are useful to ignore some misspelled words based on regular expressions.
 </table>
 <p>Filter Types:</p>
 <p><tt class="xref py py-const docutils literal"><span class="pre">SpellChecker.FILTER_WORD</span></tt>: The regex must match the whole word you want to filter.
-The word separation is done by Pangos so for example urls don&#8217;t work here because they, are separated in many words.</p>
+The word separation is done by Pangos so for example urls won&#8217;t work here because they, are separated in many words.</p>
 <p><tt class="xref py py-const docutils literal"><span class="pre">SpellChecker.FILTER_LINE</span></tt>: If the expression you want to match is a single line expression use this type.
 It should not be an open end expression because then the rest of the line with the text you want to filter become correct to.</p>
 <p><tt class="xref py py-const docutils literal"><span class="pre">SpellChecker.FILTER_TEXT</span></tt>: Use this if you want to filter multiline expressions.
 The regex will be compiled with the <cite>MULTILINE</cite> flag.
-Don&#8217;t use open end expressions here, too.</p>
+Same with open end expressions here.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gtkspellcheck.SpellChecker.append_ignore_tag">
+<tt class="descname">append_ignore_tag</tt><big>(</big><em>tag</em><big>)</big><a class="headerlink" href="#gtkspellcheck.SpellChecker.append_ignore_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends a tag to the list of ignored tags.
+A string will be automatic resolved into a tag object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tag</strong> &#8211; tag object or tag name</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -115,6 +144,24 @@ Don&#8217;t use open end expressions here, too.</p>
 <tt class="descname">buffer_initialize</tt><big>(</big><big>)</big><a class="headerlink" href="#gtkspellcheck.SpellChecker.buffer_initialize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize the GtkTextBuffer associated with the GtkTextView.
 If you associate a new GtkTextBuffer with the GtkTextView call this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gtkspellcheck.SpellChecker.check_range">
+<tt class="descname">check_range</tt><big>(</big><em>start</em>, <em>end</em>, <em>force_all=False</em><big>)</big><a class="headerlink" href="#gtkspellcheck.SpellChecker.check_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks a specified range between two GtkTextIters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>start</strong> &#8211; start iter - checking starts here</li>
+<li><strong>end</strong> &#8211; end iter - checking ends here</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -133,6 +180,20 @@ If you associate a new GtkTextBuffer with the GtkTextView call this method.</p>
 <dt id="gtkspellcheck.SpellChecker.enabled">
 <tt class="descname">enabled</tt><a class="headerlink" href="#gtkspellcheck.SpellChecker.enabled" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enable or disable spellchecking</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gtkspellcheck.SpellChecker.ignore_all">
+<tt class="descname">ignore_all</tt><big>(</big><em>word</em><big>)</big><a class="headerlink" href="#gtkspellcheck.SpellChecker.ignore_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ignores a word for the current session.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>word</strong> &#8211; the word to ignore</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -160,6 +221,21 @@ If you associate a new GtkTextBuffer with the GtkTextView call this method.</p>
 <li><strong>filter_type</strong> &#8211; the type of the filter</li>
 </ul>
 </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gtkspellcheck.SpellChecker.remove_ignore_tag">
+<tt class="descname">remove_ignore_tag</tt><big>(</big><em>tag</em><big>)</big><a class="headerlink" href="#gtkspellcheck.SpellChecker.remove_ignore_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a tag from the list of ignored tags.
+A string will be automatic resolved into a tag object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tag</strong> &#8211; tag object or tag name</td>
 </tr>
 </tbody>
 </table>
@@ -216,7 +292,7 @@ If you associate a new GtkTextBuffer with the GtkTextView call this method.</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="#">Python GTK Spellchecker 2.0 documentation</a> &raquo;</li> 
+        <li><a href="#">Python GTK Spellcheck 2.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
